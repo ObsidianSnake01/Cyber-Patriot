@@ -40,3 +40,8 @@ sed -i "s/^PASS_MIN_LEN.*/PASS_MIN_LEN    $min_length/" /etc/login.defs
 
 # Set password aging for all users
 chage --maxdays $max_age --mindays 1 --warndays 7 $(awk -F: '{print $1}' /etc/passwd)
+
+# Set up automatic updates
+apt-get install unattended-upgrades
+echo 'APT::Periodic::Update-Package-Lists "1";' >> /etc/apt/apt.conf.d/10periodic
+echo 'APT::Periodic::Unattended-Upgrade "1";' >> /etc/apt/apt.conf.d/10periodic
