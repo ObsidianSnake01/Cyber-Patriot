@@ -24,3 +24,19 @@ if [ "$delete_users" == "y" ]; then
 fi
 
 echo "Done!"
+
+
+# Update Linux
+apt-get update
+apt-get upgrade
+
+# Set maximum password age
+max_age=90
+sed -i "s/^PASS_MAX_DAYS.*/PASS_MAX_DAYS   $max_age/" /etc/login.defs
+
+# Set minimum password length
+min_length=8
+sed -i "s/^PASS_MIN_LEN.*/PASS_MIN_LEN    $min_length/" /etc/login.defs
+
+# Set password aging for all users
+chage --maxdays $max_age --mindays 1 --warndays 7 $(awk -F: '{print $1}' /etc/passwd)
