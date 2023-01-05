@@ -52,7 +52,6 @@ apt-get upgrade
 max_age=90
 sed -i "s/^PASS_MAX_DAYS.*/PASS_MAX_DAYS   $max_age/" /etc/login.defs
 
-#!/bin/bash
 
 # Install ufw
 apt-get update
